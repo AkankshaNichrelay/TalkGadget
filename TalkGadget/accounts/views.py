@@ -5,12 +5,18 @@ from django.contrib.auth import login, logout
 from django.core.urlresolvers import reverse_lazy
 from accounts.forms import UserForm, UserProfileForm
 from django.views.generic import CreateView, UpdateView
+from django.shortcuts import redirect
 
 from . import forms
 from .models import UserProfile
 
 # Create your views here.
-class SignUp(SuccessMessageMixin, CreateView):
+class SignUp(CreateView):
+    form_class = forms.UserCreateForm
+    success_url = reverse_lazy("login")
+    template_name = "accounts/signup.html"
+
+def editProfile(request):
     form_class = forms.UserProfileForm
     model = UserProfile
     second_form_class = forms.UserForm
@@ -27,7 +33,7 @@ class SignUp(SuccessMessageMixin, CreateView):
         if user_form.is_valid():
             user = user_form.save()
             user_profile = form.save(commit=False)
-            user_profile.user_id = user.id
+            user_profile.user_id = user
 
             # if 'profile_pic' in request.FILES:
             #     print('found it')
@@ -35,4 +41,4 @@ class SignUp(SuccessMessageMixin, CreateView):
             #     user_profile.profile_pic = request.FILES['profile_pic']
 
             user_profile.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return redirect(self.success_url)
