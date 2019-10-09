@@ -21,7 +21,7 @@
       <div class="container">
 
         <ul class="nav navbar-nav header">
-          <li><a class='navbar-brand bigbrand' href="#">TalkGadget</a></li>
+          <li><a class='navbar-brand bigbrand' href="{% url 'home' %}">TalkGadget</a></li>
           <li><a href="#">About</a></li>
           <li><a href="https://www.github.com">Github</a></li>
           <li><a href="https://www.linkedin.com">LinkedIn</a></li>
@@ -42,10 +42,11 @@
           </li>
 
           <li>
-            <a >Welcome: {{ user.username }}</a>
+            <a  href="{% url 'accounts:edit_profile' pk=user.pk %}" ><span class="glyphicon glyphicon-user"></span> Welcome: {{ user.username }}</a>
           </li>
             {% else %}
-            <li><a class='nav navbar-right' href="{% url 'accounts:signup' %}" ><span class="glyphicon glyphicon-user"></span></a></li>
+            <li><a class='nav navbar-right' href="{% url 'accounts:signup' %}" >Sign Up</a></li>
+            <li><a class='nav navbar-right' href="{% url 'accounts:login' %}" >Log In</a></li>
           {% endif %}
 
         </ul>

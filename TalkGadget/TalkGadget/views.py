@@ -1,4 +1,6 @@
 from django.views.generic import TemplateView
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 class HomePage(TemplateView):
     template_name = "index.html"

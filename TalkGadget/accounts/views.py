@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, logout
@@ -14,7 +16,7 @@ class SignUp(SuccessMessageMixin, CreateView):
     form_class = forms.UserProfileForm
     model = UserProfile
     second_form_class = forms.UserForm
-    success_url = reverse_lazy("thanks")
+    success_url = reverse_lazy("accounts:login")
     template_name = "accounts/signup.html"
 
     def get_context_data(self, **kwargs):
@@ -27,7 +29,7 @@ class SignUp(SuccessMessageMixin, CreateView):
         if user_form.is_valid():
             user = user_form.save()
             user_profile = form.save(commit=False)
-            user_profile.user_id = user.id
+            user_profile.user = user
 
             # if 'profile_pic' in request.FILES:
             #     print('found it')
@@ -35,4 +37,10 @@ class SignUp(SuccessMessageMixin, CreateView):
             #     user_profile.profile_pic = request.FILES['profile_pic']
 
             user_profile.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.success_url)
+
+class EditProfile(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    form_class = forms.UserProfileForm
+    model = UserProfile
+    success_url = reverse_lazy("home")
+    template_name = "accounts/edit_profile.html"
