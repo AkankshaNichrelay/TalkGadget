@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, logout
@@ -36,3 +38,9 @@ class SignUp(SuccessMessageMixin, CreateView):
 
             user_profile.save()
         return HttpResponseRedirect(self.success_url)
+
+class EditProfile(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    form_class = forms.UserProfileForm
+    model = UserProfile
+    success_url = reverse_lazy("home")
+    template_name = "accounts/edit_profile.html"
