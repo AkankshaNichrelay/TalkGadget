@@ -7,7 +7,7 @@ class HomePage(TemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse("test"))
+            return HttpResponseRedirect(reverse("posts:all"))
         return super().get(request, *args, **kwargs)
 
 class TestPage(TemplateView):
