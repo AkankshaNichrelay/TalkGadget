@@ -1,0 +1,28 @@
+{% extends "posts/post_base.html" %}
+
+{% block prepost%}
+    <h1 class='posttitle'>{{ post.title }}</h1>
+    <h4>By:
+      <a href="{%url 'posts:user_post_list' username=post.author.username %}">
+        {{post.author.username}}
+      </a>
+    </h4>
+    <h6>Category: <a href="#">{{post.category}} </a> </h6>
+    {% if post.published_date %}
+          <div class="date postdate">
+            Published On:  {{ post.published_date }}
+          </div>
+
+      {% else %}
+          <a class="btn btn-primary" href="{% url 'posts:post_publish' pk=post.pk %}">Publish</a>
+      {% endif %}
+    <a class="btn btn-default" href="{% url 'posts:post_edit' pk=post.pk %}">Edit</a>
+{% endblock %}
+{% block post_content %}
+
+  <div class="centerstage ">
+    <p class="postcontent">{{post.text}}</p>
+  </div>
+
+{% endblock %}
+{% block post_post%}{% endblock %}

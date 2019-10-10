@@ -1,0 +1,17 @@
+{% for post in post_list %}
+  <div class="post">
+
+
+      <h1><a href="{% url 'posts:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+      <div class="date">
+          <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+
+      </div>
+      <p>By: <a href="{%url 'posts:user_post_list' username=post.author.username %}">
+        {{post.author.username}}
+      </a> </p>
+      <p>Category: {{post.category}}</p>
+
+      <p>{{ post.text|truncatechars:200 }}</p>
+  </div>
+{% endfor %}

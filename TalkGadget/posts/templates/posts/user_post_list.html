@@ -1,0 +1,17 @@
+{% extends "posts/post_base.html" %}
+
+{% block prepost%}
+  <h1>{{post.author}}</h1>
+{% endblock %}
+{% block post_content %}
+
+  <div class="centerstage">
+    <div class="centerstage">
+      <div class="col-md-8">
+        {% include "posts/_post.html" %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block post_post%}{% endblock %}

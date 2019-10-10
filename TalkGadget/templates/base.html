@@ -31,11 +31,11 @@
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
           <li>
-            <a href="#" >New Post</a>
+            <a href="{% url 'posts:create' %}" >New Post</a>
           </li>
 
           <li>
-            <a href="#">Drafts</a>
+            <a href="{%url 'posts:post_draft_list' username=user.username %}">Drafts</a>
           </li>
           <li>
             <a href="{% url 'accounts:logout' %}" >Log out</a>
@@ -55,13 +55,7 @@
 
   {# The actual blog posts#}
   <div class="content container">
-      {% block preContent %}
-      {% endblock %}
-
       {% block content %}
-      {% endblock %}
-
-      {% block postContent %}
       {% endblock %}
   </div>
 

@@ -1,0 +1,21 @@
+{% extends "posts/post_base.html" %}
+
+{% block prepost%}
+  <h1>Your Saved Items</h1>
+{% endblock %}
+{% block post_content %}
+
+  <div class="centerstage">
+    <div class="centerstage">
+      <div class="col-md-8">
+        {% if post_list %}
+          {% include "posts/_post.html" %}
+        {% else %}
+          <p class="sorryClass"> No saved items found.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block post_post%}{% endblock %}
