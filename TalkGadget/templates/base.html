@@ -29,7 +29,7 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          {% if user.is_authenticated %}
+          {% if user.is_authenticated and user.userprofile.isblogger is not False %}
           <li>
             <a href="{% url 'posts:create' %}" >New Post</a>
           </li>
@@ -37,6 +37,8 @@
           <li>
             <a href="{%url 'posts:post_draft_list' username=user.username %}">Drafts</a>
           </li>
+          {% endif %}
+          {% if user.is_authenticated %}
           <li>
             <a href="{% url 'accounts:logout' %}" >Log out</a>
           </li>

@@ -22,6 +22,14 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+    def like(self):
+        self.likes = self.likes + 1;
+        self.save()
+
+    def dislike(self):
+        self.dislikes = self.dislikes + 1;
+        self.save()
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.text)
         super().save(*args, **kwargs)
