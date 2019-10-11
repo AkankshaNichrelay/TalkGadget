@@ -1,0 +1,10 @@
+
+<p>Posted by: <strong>{{ comment.user }}</strong></p>
+<p>{{ comment.text|safe|linebreaks }}</p>
+<div class="date">
+  {{ comment.created_date }}
+</div>
+
+<a class="btn btn-default" href="{# % url 'comment_remove' pk=comment.pk %#}#">Like</a>
+<a class="btn btn-default" href="{# % url 'comment_approve' pk=comment.pk %#}#">Dislike</a>
+<hr>
