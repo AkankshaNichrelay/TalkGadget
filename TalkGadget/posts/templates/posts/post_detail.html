@@ -9,14 +9,14 @@
     </h4>
     <h6>Category: <a href="#">{{post.category}} </a> </h6>
     {% if post.published_date %}
-          <div class="date postdate">
-            Published On:  {{ post.published_date }}
-          </div>
+        <div class="date postdate">
+          Published On:  {{ post.published_date }}
+        </div>
 
-      {% else %}
-          <a class="btn btn-primary" href="{% url 'posts:post_publish' pk=post.pk %}">Publish</a>
-      {% endif %}
-    <a class="btn btn-default" href="{% url 'posts:post_edit' pk=post.pk %}">Edit</a>
+    {% else %}
+        <a class="btn btn-primary" href="{% url 'posts:post_publish' pk=post.pk %}">Publish</a>
+      <a class="btn btn-default" href="{% url 'posts:post_edit' pk=post.pk %}">Edit</a>
+    {% endif %}
 {% endblock %}
 {% block post_content %}
 

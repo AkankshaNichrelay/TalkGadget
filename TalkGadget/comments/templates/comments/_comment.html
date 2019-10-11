@@ -5,6 +5,12 @@
   {{ comment.created_date }}
 </div>
 
-<a class="btn btn-default" href="{# % url 'comment_remove' pk=comment.pk %#}#">Like</a>
-<a class="btn btn-default" href="{# % url 'comment_approve' pk=comment.pk %#}#">Dislike</a>
+<a class="btn btn-default btn-sm" href="{% url 'comments:comment_liked' pk=comment.pk %}">
+  <span class="glyphicon glyphicon-thumbs-up"></span>
+  {{comment.likes}}
+</a>
+<a class="btn btn-default btn-sm" href="{% url 'comments:comment_disliked' pk=comment.pk %}">
+  <span class="glyphicon glyphicon-thumbs-down"></span>
+  {{comment.dislikes}}
+</a>
 <hr>

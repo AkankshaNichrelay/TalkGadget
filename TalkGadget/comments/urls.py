@@ -9,9 +9,7 @@ urlpatterns = [
     url(r"for/(?P<post_pk>\d+)/new/$", views.CreateCommentView.as_view(), name="create"),
     # url(r"(?P<pk>\d+)/edit/$", views.UpdatePostView.as_view(), name="post_edit"),
     # url(r"(?P<pk>\d+)/detail/$",views.PostDetailView.as_view(),name="post_detail"),
-    # url(r'(?P<pk>\d+)/publish/$', views.post_publish, name='post_publish'),
-    # url(r"by/(?P<username>[-\w]+)/$",views.UserComments.as_view(),name="user_comment_list"),
-    # url(r'^drafts/(?P<username>[-\w]+)/$', views.DraftListView.as_view(), name='post_draft_list'),
-    # url(r"delete/(?P<pk>\d+)/$",views.DeletePost.as_view(),name="delete"),
-    # url(r"by/(?P<username>[-\w]+)/$",views.UserPosts.as_view(),name="for_user"),
+    url(r'^comment/(?P<pk>\d+)/like/$', views.comment_liked, name='comment_liked'),
+    url(r'^comment/(?P<pk>\d+)/dislike/$', views.comment_disliked, name='comment_disliked'),
+    url(r"by/(?P<username>[-\w]+)/$",views.UserComments.as_view(),name="user_comment_list"),
 ]

@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from comments.models import Comment
 from posts.models import Post
@@ -20,8 +20,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 ## Edit previous comment
 
 ## Like a comment
+@login_required
+def comment_liked(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.like()
+    return redirect('posts:post_detail', pk=comment.post.pk)
 
 ## dislike a comment
+@login_required
+def comment_disliked(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.dislike()
+    return redirect('posts:post_detail', pk=comment.post.pk)
 
 ## delete a comment
 
@@ -46,7 +56,8 @@ class UserComments(ListView):
 class CreateCommentView(LoginRequiredMixin,CreateView):
 
     logging.debug('This is called.')
-    login_url = '/login/'
+#    login_url = '/login.html/'
+#    redirect_field_name = 'redirect_to'
     form_class = forms.CommentForm
     model = Comment
 
