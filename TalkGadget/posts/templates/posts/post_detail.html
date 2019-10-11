@@ -21,8 +21,25 @@
 {% block post_content %}
 
   <div class="centerstage ">
-    <p class="postcontent">{{post.text}}</p>
+    <p class="postcontent">{{post.text|safe|linebreaksbr}}</p>
   </div>
 
 {% endblock %}
-{% block post_post%}{% endblock %}
+
+{% block post_post%}
+<hr>
+<a class="btn btn-primary btn-comment" href="{% url 'comments:create' post_pk=post.pk %}">Add comment</a>
+<div class="container">
+
+  <div class="centerstage">
+    <div class="col-md-8">
+      {% for comment in post.post_comments.all %}
+      <br>
+          {% include "comments/_comment.html" %}
+      {% empty %}
+          <p>No comments posted.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

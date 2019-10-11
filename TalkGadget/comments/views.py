@@ -1,3 +1,57 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
+from django.contrib.auth.decorators import login_required
+from comments.models import Comment
+from posts.models import Post
+from . import forms
+
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
+from django.views.generic import (ListView,
+                                  DetailView,CreateView,
+                                  UpdateView,DeleteView)
+
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
+
+## Edit previous comment
+
+## Like a comment
+
+## dislike a comment
+
+## delete a comment
+
+## View a user's comments
+class UserComments(ListView):
+    model = Comment
+    #template_name = "posts/user_comment_list.html"
+
+    def get_queryset(self):
+        try:
+            return Comment.objects.filter(
+                    author__username__iexact=self.kwargs.get("username")
+                    ).order_by('-published_date')
+
+        except User.DoesNotExist:
+            raise Http404
+        else:
+            return redirect(reverse("home"))
+
+
+## Add comment to post
+class CreateCommentView(LoginRequiredMixin,CreateView):
+
+    logging.debug('This is called.')
+    login_url = '/login/'
+    form_class = forms.CommentForm
+    model = Comment
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        current_post = get_object_or_404(Post, pk=self.kwargs.get('post_pk'))
+        form.instance.post = current_post
+        return super(CreateCommentView, self).form_valid(form)

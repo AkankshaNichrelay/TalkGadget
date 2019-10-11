@@ -54,8 +54,13 @@ class PostDetailView(SelectRelatedMixin, DetailView):
 class CreatePostView(LoginRequiredMixin,CreateView):
 
     login_url = '/login/'
-    fields = ('author','title', 'text', 'category',)
+    form_class = forms.PostForm
     model = models.Post
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(CreatePostView, self).form_valid(form)
+
 
 ## Update post
 class UpdatePostView(LoginRequiredMixin,UpdateView):
